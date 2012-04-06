@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+here = File.expand_path(File.dirname(__FILE__))
+$LOAD_PATH.unshift("#{here}/../lib")
+
+require "readis"
+
+if command = ARGV.shift
+
+else
+  puts "one day this will be usage"
+end
+
+
