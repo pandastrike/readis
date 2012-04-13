@@ -42,28 +42,33 @@ loop do
 
   command = parts.shift
 
+# single_key = [ 'get', 'strlen', 'hgetall', 'hkeys', 'hlen', 'hvals', 'llen', 'scard', 'smembers', 'srandmember', 'zcard' ]
+single_key = %w(get strlen hgetall hkeys hlen hvals llen scard smembers srandmember zcard)
+
   case command
-  when 'get'
-    result = redis.get(parts[0])
-  when 'strlen'
-    result = redis.strlen(parts[0])
-  when 'hgetall'
-    result = redis.hgetall(parts[0])
-  when 'hkeys'
-    result = redis.hkeys(parts[0])
-  when 'hlen'
-    result = redis.hlen(parts[0])
-  when 'hvals'
-    result = redis.hvals(parts[0])
-  when 'llen'
-    result = redis.llen(parts[0])
-  when 'scard'
-    result = redis.scard(parts[0])
-  when 'smembers'
-    result = redis.smembers(parts[0])
-  when 'srandmember'
-    result = redis.srandmember(parts[0])
-  when 'zcard'
+#   when 'get'
+#     result = redis.get(parts[0])
+#   when 'strlen'
+#     result = redis.strlen(parts[0])
+#   when 'hgetall'
+#     result = redis.hgetall(parts[0])
+#   when 'hkeys'
+#     result = redis.hkeys(parts[0])
+#   when 'hlen'
+#     result = redis.hlen(parts[0])
+#   when 'hvals'
+#     result = redis.hvals(parts[0])
+#   when 'llen'
+#     result = redis.llen(parts[0])
+#   when 'scard'
+#     result = redis.scard(parts[0])
+#   when 'smembers'
+#     result = redis.smembers(parts[0])
+#   when 'srandmember'
+#     result = redis.srandmember(parts[0])
+#   when 'zcard'
+#     result = redis.send(command.to_sym, parts[0])
+  when *single_key
     result = redis.send(command.to_sym, parts[0])
 
 
@@ -117,7 +122,7 @@ loop do
       fields = parts[1..-1]
       result = redis.hmget(parts[0], *fields)
       # i want to take all elements AFTER the first item in the array 
-      # and send those to hmget 
+      # ang send those to hmget 
     end
 
 
