@@ -15,17 +15,6 @@ def smurf(input_string)
     mget sdiff sinter sunion hmget
   )
 
-#   if whitelist.include?(command)
-#     result = $redis.send(command.to_sym, *parts)
-#     puts result.inspect
-#   elsif command == nil 
-#     # do nothing
-#   elsif (command == "exit") || (command == "quit")
-#     exit
-#   else
-#     puts 'Unknown Redis command'
-#   end
-
   case command
   when nil
     # do nothing
