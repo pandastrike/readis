@@ -38,8 +38,10 @@ OptionParser.new do |opts|
     "comma separated list of Redis commands to exclude") do |excludes|
 		$options[:excludes] = excludes.split(",").map {|c| c.upcase}
 	end
+  ## TODO
   #opts.on("-f", "--filter NAME", "specify a preset filter") do |name|
   #end
+  ## TODO
   #opts.on("-l", "--list", "list preset filters") do |list|
     #pp $filters
   #end
@@ -125,7 +127,7 @@ def format(line)
   command = parts[0].upcase
   return if filtered?(command)
 
-  out = [format_command(command)]
+  out = [ format_command(command) ]
 
   one_channel_one_message = %w(PUBLISH)
   one_key_one_value = %w(APPEND GETSET LPUSHX RPUSHX SET SETNX)
