@@ -52,8 +52,9 @@ class RedisInspector
 
 end
 
+if $PROGRAM_NAME == __FILE__
+  inspector = RedisInspector.new("127.0.0.1", 6379)
+  inspector.run
+end
 
-# inspector = RedisInspector.new("127.0.0.1", 6379)
-# inspector.command('GET alpha')
-# inspector.run
 
