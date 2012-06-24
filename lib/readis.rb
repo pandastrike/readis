@@ -8,7 +8,6 @@ class Readis
     case name
     when "inspect"
       Readis::Inspect.new
-      # puts Readis::Inspect.new.inspect
     when "monitor"
       Readis::Monitor.new
     else

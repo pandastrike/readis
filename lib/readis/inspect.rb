@@ -6,11 +6,14 @@ require 'redis'
 
 class Readis
   class Inspect < Readis
-  
-#     def initialize(host, port)
-#       @redis = Redis.new(:host => host, :port => port)
-#     end
-  
+
+
+    def initialize(*args)
+      super
+      @redis = Redis.new(:host => self.options[:host], :port => self.options[:port])
+    end
+
+
     def command(input_string)
       parts = input_string.split(" ")
       redis_command = parts.shift
@@ -38,14 +41,20 @@ class Readis
         'Unknown Redis command'
       end
     end
+
   
     def run
       loop do
-        print "readis > "
+        print "readis #{self.options[:host]}:#{self.options[:port]}>"
         input_string = gets.chomp
         begin
           out = command(input_string)
-          puts out.inspect
+          case out
+          when nil
+            # do nothing
+          else
+            puts out.inspect
+          end
         rescue => error
           puts error.inspect
         end
@@ -54,10 +63,4 @@ class Readis
   
   end
 end
-
-if $PROGRAM_NAME == __FILE__
-  inspector = Readis::Inspect.new("127.0.0.1", 6379)
-  inspector.run
-end
-
 
