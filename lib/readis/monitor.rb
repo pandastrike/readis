@@ -47,9 +47,10 @@ Usage: readis monitor [options]
 
     # 1325296232.698537 "set" "monkey" "shines"
     def format(line)
-      line = line.gsub(/^[\d.]+ "/, "")
-      line = line.chomp('"')
-      parts = line.split('" "')
+      if timestamp = line.slice!(/^[\d.]+ "/)
+        timestamp.chomp!(' "')
+      end
+      parts = line.split('" "').map {|p| p.chomp('"') }
 
       command = parts[0].upcase
       return if filtered?(command)
@@ -104,7 +105,7 @@ Usage: readis monitor [options]
         # key, field
         out << format_key(parts[1])
         out << format_field(parts[2])
-      when "ZADD"
+      when "ZADD", "ZINCRBY"
         # ZADD score member [score] [member]
         out << format_key(parts[1])
         parts.slice(2..-1).each_slice(2) do |pair|
@@ -119,7 +120,7 @@ Usage: readis monitor [options]
           end
         end
       end
-      out
+      "#{colorize(:underscore, timestamp)} #{out}"
     end
 
     # Wraps the command in the appropriate ANSI color codes
