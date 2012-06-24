@@ -1,6 +1,14 @@
 class Readis
   class Inspect < Readis
 
+    WHITELIST = %w(
+      keys
+      exists get hexists hget hgetall hkeys hlen hmget hvals
+      info lindex llen lrange mget randomkey scard sdiff
+      sinter sismember smembers srandmember strlen sunion
+      ttl type zcard zcount zrange zrangebyscore zrank
+      zrevrange zrevrangebyscore zrevrank zscore
+    )
 
     def initialize(*args)
       super
@@ -17,36 +25,6 @@ Usage: readis inspect [options]
       optparser
     end
 
-    def execute_command(input_string)
-      parts = input_string.split(" ")
-      redis_command = parts.shift
-  
-      if redis_command
-        redis_command.downcase!
-      end
-  
-      whitelist = %w(
-        keys
-        exists get hexists hget hgetall hkeys hlen hmget hvals
-        info lindex llen lrange mget randomkey scard sdiff
-        sinter sismember smembers srandmember strlen sunion
-        ttl type zcard zcount zrange zrangebyscore zrank
-        zrevrange zrevrangebyscore zrevrank zscore
-      )
-  
-      case redis_command
-      when nil
-        # do nothing
-      when *whitelist
-        @redis.send(redis_command, *parts)
-      when "exit", "quit"
-        exit
-      else
-        'Unknown Redis command'
-      end
-    end
-
-  
     def run
       loop do
         print "readis #{self.options[:host]}:#{self.options[:port]}> "
@@ -67,11 +45,31 @@ Usage: readis inspect [options]
             puts out.inspect
           end
         rescue => error
-          puts error.inspect
+          puts "Error: #{error.message}"
         end
       end
     end
   
+    def execute_command(input_string)
+      parts = input_string.split(" ")
+      redis_command = parts.shift
+  
+      if redis_command
+        redis_command.downcase!
+      end
+  
+      case redis_command
+      when nil
+        # do nothing
+      when *WHITELIST
+        @redis.send(redis_command, *parts)
+      when "exit", "quit"
+        exit
+      else
+        raise ArgumentError, "Unknown or unsupported command"
+      end
+    end
+
   end
 end
 
