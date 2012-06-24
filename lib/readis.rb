@@ -29,11 +29,11 @@ class Readis
     OptionParser.new do |parser|
       parser.on("-h", "--host=HOST",
         "redis host. Defaults to '127.0.0.1'") do |name|
-        options[:host] = name
+        self.options[:host] = name
       end
       parser.on("-p", "--port=PORT",
         "redis port. Defaults to '6379'") do |name|
-        options[:port] = name
+        self.options[:port] = name
       end
     end
   end
