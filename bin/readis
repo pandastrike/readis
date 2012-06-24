@@ -1,14 +1,18 @@
 #!/usr/bin/env ruby
 
-here = File.expand_path(File.dirname(__FILE__))
-$LOAD_PATH.unshift("#{here}/../lib")
+# set up loadpath
+here = File.dirname(__FILE__)
+READIS_ROOT = File.expand_path("#{here}/..")
+$LOAD_PATH.unshift("#{READIS_ROOT}/lib")
 
 require "readis"
 
-if command = ARGV.shift
+command_name = ARGV.shift
 
+if command_name == "help"
+  actual_command = ARGV.shift
+  puts Readis.command(actual_command).help
 else
-  puts "one day this will be usage"
+  Readis.command(command_name).run
 end
-
 
