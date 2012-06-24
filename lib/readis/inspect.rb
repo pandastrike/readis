@@ -45,7 +45,7 @@ class Readis
   
     def run
       loop do
-        print "readis #{self.options[:host]}:#{self.options[:port]}>"
+        print "readis #{self.options[:host]}:#{self.options[:port]}> "
         input_string = gets.chomp
         begin
           out = command(input_string)
