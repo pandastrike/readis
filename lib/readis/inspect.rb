@@ -1,9 +1,3 @@
-#!/usr/bin/env ruby
-
-require 'rubygems'
-require 'redis'
-
-
 class Readis
   class Inspect < Readis
 
@@ -13,6 +7,15 @@ class Readis
       @redis = Redis.new(:host => self.options[:host], :port => self.options[:port])
     end
 
+    def parser
+      optparser = super
+      optparser.banner = <<-BANNER
+
+Usage: readis inspect [options]
+
+      BANNER
+      optparser
+    end
 
     def command(input_string)
       parts = input_string.split(" ")

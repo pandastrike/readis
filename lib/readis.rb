@@ -1,6 +1,9 @@
 require "optparse"
 
 require "rubygems"
+require "redis"
+require "json"
+require "term/ansicolor"
 
 class Readis 
 
@@ -12,7 +15,7 @@ class Readis
       Readis::Monitor.new
     else
       puts "Usage: readis <command> [options]"
-      puts "Available commands: inspect, monitor"
+      puts "Available commands: inspect, monitor, help"
       exit
     end
   end
@@ -51,5 +54,5 @@ end
 
 
 require "readis/inspect"
-# require "readis/monitor"
+require "readis/monitor"
 
