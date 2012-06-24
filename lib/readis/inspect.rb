@@ -1,14 +1,14 @@
 class Readis
   class Inspect < Readis
 
-    WHITELIST = %w(
+    WHITELIST = %w[
       keys
       exists get hexists hget hgetall hkeys hlen hmget hvals
       info lindex llen lrange mget randomkey scard sdiff
       sinter sismember smembers srandmember strlen sunion
       ttl type zcard zcount zrange zrangebyscore zrank
       zrevrange zrevrangebyscore zrevrank zscore
-    )
+    ]
 
     def initialize(*args)
       super
