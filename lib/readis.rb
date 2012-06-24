@@ -7,7 +7,7 @@ require "term/ansicolor"
 
 class Readis 
 
-  def self.command(name)
+  def self.command_runner(name)
     case name
     when "inspect"
       Readis::Inspect.new
@@ -18,6 +18,12 @@ class Readis
       puts "Available commands: inspect, monitor, help"
       exit
     end
+  end
+
+  def initialize
+    self.parser.parse!
+    @host = options[:host]
+    @port = options[:port]
   end
 
   def options
@@ -42,12 +48,6 @@ class Readis
 
   def help
     parser.help
-  end
-
-  def initialize
-    self.parser.parse!
-    @host = options[:host]
-    @port = options[:port]
   end
 
 end

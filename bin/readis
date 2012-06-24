@@ -11,8 +11,8 @@ command_name = ARGV.shift
 
 if command_name == "help"
   actual_command = ARGV.shift
-  puts Readis.command(actual_command).help
+  puts Readis.command_runner(actual_command).help
 else
-  Readis.command(command_name).run
+  Readis.command_runner(command_name).run
 end
 

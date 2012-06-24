@@ -17,7 +17,7 @@ Usage: readis inspect [options]
       optparser
     end
 
-    def command(input_string)
+    def execute_command(input_string)
       parts = input_string.split(" ")
       redis_command = parts.shift
   
@@ -51,7 +51,7 @@ Usage: readis inspect [options]
         print "readis #{self.options[:host]}:#{self.options[:port]}> "
         input_string = gets.chomp
         begin
-          out = command(input_string)
+          out = execute_command(input_string)
           case out
           when nil
             # do nothing
