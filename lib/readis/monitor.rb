@@ -41,6 +41,9 @@ Usage: readis monitor [options]
         "comma separated list of Redis commands to exclude") do |excludes|
         options[:excludes] = excludes.split(",").map {|c| c.upcase}
       end
+      # TODO: options for
+      # * compact vs. spacey
+      # * timestamp on/off
       optparser
     end
 
