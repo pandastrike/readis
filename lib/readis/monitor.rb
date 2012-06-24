@@ -6,7 +6,6 @@ class Readis
       if options[:includes] && options[:excludes]
         raise ArgumentError, "Define either --includes or --excludes, but not both."
       end
-      @redis = Redis.new(:host => self.options[:host], :port => self.options[:port])
     end
 
     def run

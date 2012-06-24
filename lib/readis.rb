@@ -22,8 +22,7 @@ class Readis
 
   def initialize
     self.parser.parse!
-    @host = options[:host]
-    @port = options[:port]
+    @redis = Redis.new(:host => self.options[:host], :port => self.options[:port])
   end
 
   def options
