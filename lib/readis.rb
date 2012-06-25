@@ -15,7 +15,8 @@ class Readis
       Readis::Monitor.new
     else
       puts "Usage: readis <command> [options]"
-      puts "Available commands: inspect, monitor, help"
+      puts "Usage: readis help <command>"
+      puts "Available commands: inspect, monitor"
       exit
     end
   end
