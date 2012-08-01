@@ -9,6 +9,10 @@ require "readis"
 
 command_name = ARGV.shift
 
+trap("INT") do
+  exit # without all the backtrace fuss.
+end
+
 if command_name == "help"
   actual_command = ARGV.shift
   puts Readis.command_runner(actual_command).help
