@@ -11,8 +11,7 @@ class Readis
     def run
       @redis.monitor do |line|
         if formatted = format(line)
-          print formatted
-          puts
+          puts formatted
         end
       end
     end
@@ -123,7 +122,7 @@ Usage: readis monitor [options]
           end
         end
       end
-      "#{colorize(:underscore, timestamp)} #{out}"
+      "#{colorize(:underscore, timestamp)} #{out.join('')}"
     end
 
     # Wraps the command in the appropriate ANSI color codes
