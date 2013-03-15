@@ -16,7 +16,6 @@ class Readis
     def method_missing(name, *args, &block)
       begin
         @client.send(name, *args, &block)
-        @backoff = 1
       rescue => e
         puts "Command failed because of error: #{e.message}"
         puts "Sleeping #{@backoff} seconds"
@@ -24,7 +23,16 @@ class Readis
         if @backoff <= 8
           @backoff = @backoff * 2
         end
+        @backoff = 1 if alive?
         retry
+      end
+    end
+
+    def alive?
+      begin
+        @client.ping
+      rescue
+        false
       end
     end
 
