@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "readis"
-  s.version = "0.2.1"
+  s.version = "0.2.2"
   s.authors = ["Matthew King", "Lance Lakey"]
   s.homepage = "https://github.com/lancelakey/readis"
   s.summary = "Read-only Redis Utilities"

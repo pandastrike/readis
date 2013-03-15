@@ -7,6 +7,33 @@ require "term/ansicolor"
 
 class Readis 
 
+  class Retry
+    def initialize(client)
+      @client = client
+      @backoff = 1
+    end
+
+    def method_missing(name, *args, &block)
+      begin
+        @client.send(name, *args, &block)
+        @backoff = 1
+      rescue => e
+        puts "Command failed because of error: #{e.message}"
+        puts "Sleeping #{@backoff} seconds"
+        sleep @backoff
+        if @backoff <= 8
+          @backoff = @backoff * 2
+        end
+        retry
+      end
+    end
+
+    def type(*args)
+      @client.send(:type, *args)
+    end
+
+  end
+
   def self.command_runner(name)
     case name
     when "inspect"
@@ -23,7 +50,8 @@ class Readis
 
   def initialize
     self.parser.parse!
-    @redis = Redis.new(:host => self.options[:host], :port => self.options[:port])
+    @_redis = Redis.new(:host => self.options[:host], :port => self.options[:port])
+    @redis = Retry.new(@_redis)
   end
 
   def options
