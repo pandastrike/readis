@@ -46,11 +46,12 @@ Usage: readis monitor [options]
       optparser
     end
 
-
-    # 1325296232.698537 "set" "monkey" "shines"
     def format(line)
-      if timestamp = line.slice!(/^[\d.]+ "/)
-        timestamp.chomp!(' "')
+      if timestamp = line.slice!(/^[\d.]+ /)
+        timestamp.strip!
+      end
+      if client = line.slice!(/\[\d+ [\d:\.]+\] "/)
+        client = client.slice(3..-4)
       end
       parts = line.split('" "').map {|p| p.chomp('"') }
 
