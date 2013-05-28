@@ -17,13 +17,7 @@ class Readis
       begin
         @client.send(name, *args, &block)
       rescue => e
-        puts "Command failed because of error: #{e.message}"
-        puts "Sleeping #{@backoff} seconds"
-        sleep @backoff
-        if @backoff <= 8
-          @backoff = @backoff * 2
-        end
-        @backoff = 1 if alive?
+        sleep 0.5
         retry
       end
     end
