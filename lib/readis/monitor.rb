@@ -99,6 +99,15 @@ Usage: readis monitor [options]
         parts.slice(2..-1).each do |part|
           out << format_argument(part)
         end
+      when "HMSET"
+        # key, field, value, [field, value, ...]
+        out << format_key(parts[1])
+        out << "\n" + format_field(parts[2])
+        out << format_value(parts[3])
+        parts.slice(4..-1).each_slice(2) do |a|
+          out << "\n" + format_field(a[0])
+          out << format_value(a[1])
+        end
       when *one_key_one_field_one_value
         # key, field, value
         out << format_key(parts[1])
